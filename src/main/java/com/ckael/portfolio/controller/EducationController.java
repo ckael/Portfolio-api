@@ -3,6 +3,8 @@ package com.ckael.portfolio.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,30 +23,36 @@ public class EducationController {
 	EducationServiceImpl Service;
 	
 	@GetMapping("/listEducation")
-	public List<Education> listEducation()
+	public ResponseEntity<List<Education>>  listEducation()
 	{
-		return Service.getAllEducation();
+		return new ResponseEntity<>(Service.getAllEducation(), HttpStatus.OK);
 	}
+	
 	@GetMapping("/findEducation/{Id}")
-	public Education findEducationById(@PathVariable Long Id) 
+	public ResponseEntity<Education> findEducationById(@PathVariable Long Id) 
 	{	
-		return Service.getEducationById(Id);
+		Education edu = Service.getEducationById(Id);
+		return ResponseEntity.ok(edu);
 	}
+	
 	@GetMapping("/deleteEducation/Id/{Id}")
-	public void deleteEducation(@PathVariable Long Id)
+	public ResponseEntity<?> deleteEducation(@PathVariable Long Id)
 	{
 		Service.deleteEducationById(Id);
+		return ResponseEntity.noContent().build();
 	}
+	
 	@PostMapping("/addEducation")
-	public Education saveEducation(@RequestBody() Education e)
+	public ResponseEntity<Education> saveEducation(@RequestBody() Education e)
 	{
-		
-		return Service.saveEducation(e);
+		Education edu =  Service.saveEducation(e);
+		return new ResponseEntity<>(edu, HttpStatus.CREATED);
 	}
+	
 	@PostMapping("/editEducation")
-	public Education editEducation(@RequestBody() Education e)
+	public ResponseEntity<Education> editEducation(@RequestBody() Education e)
 	{
-		
-		return Service.editEducation(e);
+		Education edu = Service.editEducation(e);
+		return ResponseEntity.accepted().body(edu);
 	}
 }

@@ -3,6 +3,8 @@ package com.ckael.portfolio.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,32 +23,36 @@ public class ExperiencesController {
 	ExperiencesServiceImpl Service;
 	
 	@GetMapping("/listExperiences")
-	public List<Experiences> listExperiences()
+	public  ResponseEntity<List<Experiences>> listExperiences()
 	{
-		
-		return Service.getAllExperiences();
+		return new ResponseEntity<>(Service.getAllExperiences(),HttpStatus.OK);
 	}
+	
 	@GetMapping("/findExperience/{Id}")
-	public Experiences findExperiencesById(@PathVariable Long Id) 
+	public ResponseEntity<Experiences> findExperiencesById(@PathVariable Long Id) 
 	{
-		
-		return Service.getExperienceById(Id);
+		Experiences experience = Service.getExperienceById(Id);
+		return ResponseEntity.ok(experience);
 	}
+	
 	@GetMapping("/deleteExperience/Id/{Id}")
-	public void deleteExperience(@PathVariable Long Id) 
+	public ResponseEntity<?> deleteExperience(@PathVariable Long Id) 
 	{
 		Service.deleteExperienceById(Id);
+		return ResponseEntity.noContent().build();
 	}
+	
 	@PostMapping("/addExperience")
-	public Experiences addExperiences(@RequestBody() Experiences e) 
+	public ResponseEntity<Experiences> addExperiences(@RequestBody() Experiences e) 
 	{
-		
-		return Service.saveExperience(e);
+		Experiences experience = Service.saveExperience(e);
+		return new ResponseEntity<>(experience,HttpStatus.CREATED);
 	}
+	
 	@PostMapping("/editExperience")
-	public Experiences editExperiences(@RequestBody() Experiences e) 
+	public ResponseEntity<Experiences> editExperiences(@RequestBody() Experiences e) 
 	{
-		
-		return Service.updateExperience(e);
+		Experiences experience= Service.updateExperience(e);
+		return ResponseEntity.accepted().body(experience);
 	}
 }

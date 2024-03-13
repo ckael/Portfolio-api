@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,43 +24,46 @@ public class ProjectController {
 	ProjectServiceImpl Service;
 	
 	@GetMapping("/listProjects")
-	public List<Project> listProject()
+	public ResponseEntity<List<Project>> listProject()
 	{
 		
-		return Service.getAllProject();
+		return new ResponseEntity<>(Service.getAllProject(), HttpStatus.OK) ;
 	}
 	
 	@GetMapping("/deleteProject/Id/{Id}")
-	public void deleteProject(@PathVariable() Long Id) 
-	{
-		
+	public ResponseEntity<?> deleteProject(@PathVariable() Long Id) 
+	{	
 		Service.deleteProjectById(Id);	
+		return ResponseEntity.noContent().build();
 	}
+	
 	@GetMapping("/findProject/{Id}")
-	public Project findProjectById(@PathVariable() Long Id)
+	public ResponseEntity<Project> findProjectById(@PathVariable() Long Id)
 	{
 		
-		return Service.getProjectById(Id);
+		Project projet = Service.getProjectById(Id);
+		return ResponseEntity.ok(projet);
 	}
 	
 	@PostMapping("/editProject")
-	public Project editProject(@RequestBody Project p) 
+	public ResponseEntity<Project> editProject(@RequestBody Project p) 
 	{
 		
-		return Service.updateProject(p);
+		Project projet = Service.updateProject(p);
+		return ResponseEntity.accepted().body(projet);
 	}
 	
 	@PostMapping("/saveProject")
-	public Project saveProject(@RequestBody Project p) 
+	public ResponseEntity<Project> saveProject(@RequestBody Project p) 
 	{
 		
-		return Service.addProject(p);
+		return new ResponseEntity<>(Service.addProject(p), HttpStatus.CREATED);
 	}
+	
 	@GetMapping("/getProjectPage/{page}")
-	public Page<Project> getProjectPage(@PathVariable() int page)
-	{
-		
-		return Service.getProjectPage(page);
+	public ResponseEntity<Page<Project>>  getProjectPage(@PathVariable() int page)
+	{	
+		return new ResponseEntity<>(Service.getProjectPage(page),HttpStatus.OK);
 	}
 }
 

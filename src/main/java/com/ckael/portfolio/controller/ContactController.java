@@ -3,6 +3,8 @@ package com.ckael.portfolio.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,34 +22,36 @@ public class ContactController {
 	ContactServiceImpl Service;
 	
 	@PostMapping("/addContact")
-	public Contact addContact(@RequestBody()Contact c) 
-	{
-		
-		return Service.saveContact(c);
-			
+	public ResponseEntity<Contact> addContact(@RequestBody()Contact c) 
+	{	
+		Contact contact = Service.saveContact(c);
+		return new ResponseEntity<>(contact,HttpStatus.CREATED);			
 	}
+	
 	@PostMapping("/editContact")
-	public Contact editContact(@RequestBody()Contact c)
-	{
-		
-		return Service.updateContact(c);
+	public ResponseEntity<Contact> editContact(@RequestBody()Contact c)
+	{	
+		Contact contact = Service.updateContact(c);
+		return ResponseEntity.accepted().body(contact);
 	}
 	
 	@GetMapping("/findContact/{Id}")
-	public Contact findContactById( @PathVariable Integer Id) 
+	public ResponseEntity<Contact> findContactById( @PathVariable Integer Id) 
 	{
+		Contact contact = Service.findContactById(Id);
+		return ResponseEntity.ok(contact);
+	}
 	
-		return Service.findContactById(Id);
-	}
 	@GetMapping("/listContact")
-	public List<Contact> getAllContacts()
+	public ResponseEntity<List<Contact>> getAllContacts()
 	{	
-		return Service.findAllContact();
+		return new ResponseEntity<>(Service.findAllContact(), HttpStatus.OK); 
 	}
+	
 	@GetMapping("/deleteContact/Id/{Id}")
-	public void deleteContact(@PathVariable("Id") Integer Id) 
+	public ResponseEntity<?> deleteContact(@PathVariable("Id") Integer Id) 
 	{
-		
 		Service.deleteContactById(Id);
+		return ResponseEntity.noContent().build();
 	}
 }
