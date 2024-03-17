@@ -86,6 +86,12 @@ public class Contact implements Serializable{
 		super();
 		
 	}
+	@Override
+	public String toString() {
+		return "Contact [ContactId=" + ContactId + ", Name=" + Name + ", FirstName=" + FirstName + ", Post=" + Post
+				+ ", Phone=" + Phone + ", Email=" + Email + ", Facebook=" + Facebook + ", Linkedin=" + Linkedin + "]";
+	}
+	
 	
 	
 	

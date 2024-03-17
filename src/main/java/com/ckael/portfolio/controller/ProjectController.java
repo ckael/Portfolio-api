@@ -31,10 +31,10 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/deleteProject/Id/{Id}")
-	public ResponseEntity<?> deleteProject(@PathVariable() Long Id) 
+	public ResponseEntity<String> deleteProject(@PathVariable() Long Id) 
 	{	
 		Service.deleteProjectById(Id);	
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok("Project \t"+Id+"\t deleted successfuly");
 	}
 	
 	@GetMapping("/findProject/{Id}")

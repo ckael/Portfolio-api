@@ -28,10 +28,10 @@ public class SkillController {
 	}
 	
 	@GetMapping("/deleteSkill/Id/{Id}")
-	public ResponseEntity<?> deleteSkills(@PathVariable() Long Id) 
+	public ResponseEntity<String> deleteSkills(@PathVariable() Long Id) 
 	{
 		Service.deleteSkillsById(Id);	
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok("Skill \t"+Id+"\t deleted successfuly");
 	}
 	
 	@GetMapping("/findSkill/{Id}")

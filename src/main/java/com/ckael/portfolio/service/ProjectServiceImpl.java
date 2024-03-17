@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.ckael.portfolio.exception.NotFoundException;
 import com.ckael.portfolio.model.Project;
 import com.ckael.portfolio.repository.ProjectRepository;
 
@@ -40,9 +41,9 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Project getProjectById(Long Id) {
+	public Project getProjectById(Long Id) throws NotFoundException{
 	
-		return Rep.findById(Id).get();
+		return Rep.findById(Id).orElseThrow(()->new NotFoundException("Projet non trouve"));
 	}
 
 	@Override

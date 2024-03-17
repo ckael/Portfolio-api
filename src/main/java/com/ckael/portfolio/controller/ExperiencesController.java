@@ -36,10 +36,10 @@ public class ExperiencesController {
 	}
 	
 	@GetMapping("/deleteExperience/Id/{Id}")
-	public ResponseEntity<?> deleteExperience(@PathVariable Long Id) 
+	public ResponseEntity<String> deleteExperience(@PathVariable Long Id) 
 	{
 		Service.deleteExperienceById(Id);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok("Experience \t"+Id+"\t deleted successfuly");
 	}
 	
 	@PostMapping("/addExperience")

@@ -49,9 +49,9 @@ public class ContactController {
 	}
 	
 	@GetMapping("/deleteContact/Id/{Id}")
-	public ResponseEntity<?> deleteContact(@PathVariable("Id") Integer Id) 
+	public ResponseEntity<String> deleteContact(@PathVariable("Id") Integer Id) 
 	{
 		Service.deleteContactById(Id);
-		return ResponseEntity.noContent().build();
+		 return ResponseEntity.ok("Contact \t"+Id+"\t deleted successfuly");
 	}
 }

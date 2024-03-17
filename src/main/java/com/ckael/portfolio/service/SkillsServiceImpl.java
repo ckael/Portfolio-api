@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ckael.portfolio.exception.NotFoundException;
 import com.ckael.portfolio.model.Skills;
 import com.ckael.portfolio.repository.SkillsRepository;
 @Service
@@ -31,9 +32,9 @@ public class SkillsServiceImpl implements SkillsService {
 	}
 
 	@Override
-	public Skills getSkillsById(Long Id) {
+	public Skills getSkillsById(Long Id) throws NotFoundException {
 		
-		return Rep.findById(Id).get();
+		return Rep.findById(Id).orElseThrow(()->new NotFoundException("Skills not Found"));
 	}
 
 	@Override

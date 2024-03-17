@@ -1,7 +1,10 @@
 package com.ckael.portfolio.service;
 
 import java.util.List;
-import java.util.Optional;
+
+
+import com.ckael.portfolio.exception.NotFoundException;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,9 +40,10 @@ public class ContactServiceImpl implements ContactService {
 
 	}
 	@Override	
-	public Contact findContactById(Integer Id) {
+	public Contact findContactById(Integer Id) throws NotFoundException  {	
 		
-		return Rep.findById(Id).get();
+	 
+		return Rep.findById(Id).orElseThrow(()->new NotFoundException("Ce contact n'existe pas"));
 		
 	}
 

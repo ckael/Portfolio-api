@@ -36,10 +36,10 @@ public class EducationController {
 	}
 	
 	@GetMapping("/deleteEducation/Id/{Id}")
-	public ResponseEntity<?> deleteEducation(@PathVariable Long Id)
+	public ResponseEntity<String> deleteEducation(@PathVariable Long Id)
 	{
 		Service.deleteEducationById(Id);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok("Education \t"+Id+"\t deleted successfuly");
 	}
 	
 	@PostMapping("/addEducation")

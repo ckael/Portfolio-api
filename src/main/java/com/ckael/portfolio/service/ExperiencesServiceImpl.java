@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ckael.portfolio.exception.NotFoundException;
 import com.ckael.portfolio.model.Experiences;
 import com.ckael.portfolio.repository.ExperiencesRepository;
 
@@ -38,9 +39,9 @@ public class ExperiencesServiceImpl implements ExperiencesService {
 	}
 
 	@Override
-	public Experiences getExperienceById(Long id) {
+	public Experiences getExperienceById(Long id) throws NotFoundException {
 		
-		return Rep.findById(id).get();
+		return Rep.findById(id).orElseThrow(()->new NotFoundException("Experience non trouve"));
 	}
 
 	@Override
