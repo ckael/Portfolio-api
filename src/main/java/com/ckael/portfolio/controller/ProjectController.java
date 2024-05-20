@@ -6,15 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ckael.portfolio.model.Project;
 import com.ckael.portfolio.service.ProjectServiceImpl;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/project")
@@ -30,7 +34,7 @@ public class ProjectController {
 		return new ResponseEntity<>(Service.getAllProject(), HttpStatus.OK) ;
 	}
 	
-	@GetMapping("/deleteProject/Id/{Id}")
+	@DeleteMapping("/deleteProject/Id/{Id}")
 	public ResponseEntity<String> deleteProject(@PathVariable() Long Id) 
 	{	
 		Service.deleteProjectById(Id);	
@@ -45,16 +49,16 @@ public class ProjectController {
 		return ResponseEntity.ok(projet);
 	}
 	
-	@PostMapping("/editProject")
-	public ResponseEntity<Project> editProject(@RequestBody Project p) 
+	@PutMapping("/editProject")
+	public ResponseEntity<Project> editProject(@Valid @RequestBody Project p) 
 	{
 		
 		Project projet = Service.updateProject(p);
 		return ResponseEntity.accepted().body(projet);
 	}
 	
-	@PostMapping("/saveProject")
-	public ResponseEntity<Project> saveProject(@RequestBody Project p) 
+	@PostMapping("/addProject")
+	public ResponseEntity<Project> saveProject(@Valid @RequestBody Project p) 
 	{
 		
 		return new ResponseEntity<>(Service.addProject(p), HttpStatus.CREATED);

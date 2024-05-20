@@ -5,15 +5,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ckael.portfolio.model.Experiences;
 import com.ckael.portfolio.service.ExperiencesServiceImpl;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/experience")
@@ -35,7 +39,7 @@ public class ExperiencesController {
 		return ResponseEntity.ok(experience);
 	}
 	
-	@GetMapping("/deleteExperience/Id/{Id}")
+	@DeleteMapping("/deleteExperience/Id/{Id}")
 	public ResponseEntity<String> deleteExperience(@PathVariable Long Id) 
 	{
 		Service.deleteExperienceById(Id);
@@ -43,14 +47,14 @@ public class ExperiencesController {
 	}
 	
 	@PostMapping("/addExperience")
-	public ResponseEntity<Experiences> addExperiences(@RequestBody() Experiences e) 
+	public ResponseEntity<Experiences> addExperiences(@Valid @RequestBody() Experiences e) 
 	{
 		Experiences experience = Service.saveExperience(e);
 		return new ResponseEntity<>(experience,HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/editExperience")
-	public ResponseEntity<Experiences> editExperiences(@RequestBody() Experiences e) 
+	@PutMapping("/editExperience")
+	public ResponseEntity<Experiences> editExperiences(@Valid @RequestBody() Experiences e) 
 	{
 		Experiences experience= Service.updateExperience(e);
 		return ResponseEntity.accepted().body(experience);

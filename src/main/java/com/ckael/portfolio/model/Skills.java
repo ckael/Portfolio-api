@@ -3,25 +3,35 @@ package com.ckael.portfolio.model;
 import java.io.Serializable;
 
 import org.hibernate.annotations.ValueGenerationType;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Skills implements Serializable  {
 	
 @Id@ GeneratedValue(strategy=GenerationType.AUTO)
 Long skillsId;
+
+@NotBlank(message="must be not null")
 @Column
 String skillsName;
+
+@NotNull(message="must be not null")
 @Column
 int skillsrate;
-@Column
 
+
+@Column
 String skillsDescription;
+
+
 public Long getSkillsId() {
 	return skillsId;
 }

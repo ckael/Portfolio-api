@@ -7,18 +7,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Experiences implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	Long ExperienceId;
+	
+	@NotBlank(message="must be not null")
 	@Column
 	String ExperienceCompany;
+	
+	@NotBlank(message="must be not null")
 	@Column
 	String ExperienceDuration;
+	
+	@NotBlank(message="must be not null")
 	@Column
 	String ExperienceTitle;
+	
+	@NotBlank(message="must be not null")
+	@Size(min=10,message="Experiences information is incomplet")
 	@Column
 	String ExperiencesDesc;
 	

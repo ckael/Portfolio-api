@@ -8,18 +8,27 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Project implements Serializable{
 @Id
 @GeneratedValue(strategy=GenerationType.AUTO)
 Long ProjectId;
+
+@NotBlank(message="must be not null")
 @Column
 String ProjectLink;
+
+@NotBlank(message="must be not null")
 @Column
 String ProjectDesc;
+
+@NotBlank(message="must be not null")
 @Column
 String ProjectTitle;
+
+@NotBlank(message="must be not null")
 @Column 
 String ProjectTech;
 public Long getProjectId() {

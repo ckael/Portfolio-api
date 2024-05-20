@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,13 +18,15 @@ import com.ckael.portfolio.model.Education;
 
 import com.ckael.portfolio.service.EducationServiceImpl;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/education")
 public class EducationController {
 	@Autowired
 	EducationServiceImpl Service;
 	
-	@GetMapping("/listEducation")
+	@GetMapping("/listEducations")
 	public ResponseEntity<List<Education>>  listEducation()
 	{
 		return new ResponseEntity<>(Service.getAllEducation(), HttpStatus.OK);
@@ -35,7 +39,7 @@ public class EducationController {
 		return ResponseEntity.ok(edu);
 	}
 	
-	@GetMapping("/deleteEducation/Id/{Id}")
+	@DeleteMapping("/deleteEducation/Id/{Id}")
 	public ResponseEntity<String> deleteEducation(@PathVariable Long Id)
 	{
 		Service.deleteEducationById(Id);
@@ -43,14 +47,14 @@ public class EducationController {
 	}
 	
 	@PostMapping("/addEducation")
-	public ResponseEntity<Education> saveEducation(@RequestBody() Education e)
+	public ResponseEntity<Education> saveEducation(@Valid @RequestBody() Education e)
 	{
 		Education edu =  Service.saveEducation(e);
 		return new ResponseEntity<>(edu, HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/editEducation")
-	public ResponseEntity<Education> editEducation(@RequestBody() Education e)
+	@PutMapping("/editEducation")
+	public ResponseEntity<Education> editEducation(@Valid @RequestBody() Education e)
 	{
 		Education edu = Service.editEducation(e);
 		return ResponseEntity.accepted().body(edu);
